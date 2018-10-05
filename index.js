@@ -9,18 +9,42 @@ $(document).ready(function () {
     //         displayRecipes(recipes)
     //         hideLoading();
     //     });
+    $(".recipe-box").hover(function(){
+        $(this).find(".card__picture").css("opacity", .1);
+        $(this).find(".recipe-box__details").show();
+        }, function(){
+        $(this).find(".card__picture").css("opacity", 1);
+        $(this).find(".recipe-box__details").hide();
+    });
 })
+
+function getHealthLabels(recipe) {
+   // return `<ul><li>ingred 1</li><li>ingred 1</li></ul>`
+    let html = ''
+    if (!recipe.healthLabels) return ''
+    html += '<ul>';
+    for (let i = 0; i < recipe.healthLabels.length; i++) {
+        html += `<li>${recipe.healthLabels[i]}`;
+    }
+    html += '</ul>';
+    return html;
+}
+
 
 function getRecipeHtml(recipe) {
     const html = `
         <div class="col-4">
-            <div class="recipe-box">
-                <a href="${recipe.url}" target="_blank"><img class="card__picture" src="${recipe.image}"></a>
+            <div class="recipe-box">               
+               <img class="card__picture" src="${recipe.image}" alt="${recipe.label}">
                 <div class="recipe-text">
-                    <span class="recipe-text__name">${recipe.label}</span>
+                <a href="${recipe.url}" target="_blank"><span class="recipe-text__name">${recipe.label}</span></a>
                     <span class="recipe-text__time"> ${recipe.totalTime} minutes</span>
-                </div>
-            </div>
+                </div>  
+                <div class="recipe-box__details js-recipe-details">
+                    <div class="recipe-box__ingredients">${recipe.ingredients.length} ingredients</div>
+                   <div class="recipe-box__health-labels"${getHealthLabels(recipe)}</div>
+                </div>                                     
+            </div>           
         </div>
     `
     return html;
