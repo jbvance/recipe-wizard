@@ -1,11 +1,11 @@
-let recipes = {};
+//let recipes = {};
 
 $(document).ready(function () {
     getRecipes()
-        .then(displayRecipes);
+        .then(recipes =>  displayRecipes(recipes));
 })
 
-function getRecipeHtml(recipe) {    
+function getRecipeHtml(recipe) {
     const html = `
         <div class="col-4">
             <div class="recipe-box">
@@ -20,10 +20,10 @@ function getRecipeHtml(recipe) {
     return html;
 }
 
-function displayRecipes() {
+function displayRecipes(recipes) {
     let html = ''
-    const tmpArray = recipes.hits.slice(0,20);
-    for (let i = 0; i < tmpArray.length; i ++) {
+    const tmpArray = recipes.hits.slice(0, 20);
+    for (let i = 0; i < tmpArray.length; i++) {
         const recipeHtml = getRecipeHtml(tmpArray[i].recipe);
         if ((i + 1) % 3 === 1) {
             html += `<div class="row">${recipeHtml}`;
@@ -31,20 +31,23 @@ function displayRecipes() {
             html += `${recipeHtml}</div>`;
         } else {
             html += recipeHtml;
-        }        
-    }   
+        }
+    }
     $('.js-recipes').replaceWith(html);
 }
 
 function getRecipes() {
-    const url = `https://api.edamam.com/search?q=chicken&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-30`
-    return getJson(url)
-        .then(res => {
-            recipes = res;           
-        })
-        .catch(err => {
-            console.log("ERROR", err);
-        })
+    return new Promise((resolve, reject) => {
+        const url = `https://api.edamam.com/search?q=grilled cheese&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-30`
+        getJson(url)
+            .then(res => {
+                resolve(res)
+                //recipes = res;           
+            })
+            .catch(err => {
+                console.log("ERROR", err);
+            })
+    })
 }
 
 
