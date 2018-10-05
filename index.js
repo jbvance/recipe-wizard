@@ -3,11 +3,12 @@ let props = {
 }
 
 $(document).ready(function () {    
-    getRecipes()
-        .then(recipes => {
-            displayRecipes(recipes)
-            hideLoading();
-        });
+    displayRecipes(response);
+    // getRecipes()
+    //     .then(recipes => {
+    //         displayRecipes(recipes)
+    //         hideLoading();
+    //     });
 })
 
 function getRecipeHtml(recipe) {
@@ -17,7 +18,7 @@ function getRecipeHtml(recipe) {
                 <a href="${recipe.url}" target="_blank"><img class="card__picture" src="${recipe.image}"></a>
                 <div class="recipe-text">
                     <span class="recipe-text__name">${recipe.label}</span>
-                    <span> ${recipe.totalTime} minutes</span>
+                    <span class="recipe-text__time"> ${recipe.totalTime} minutes</span>
                 </div>
             </div>
         </div>
