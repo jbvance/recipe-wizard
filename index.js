@@ -90,6 +90,7 @@ function getRecipes() {
             })
             .catch(err => {
                 console.log("ERROR", err);
+                hideLoading();
             })
     })
 }
