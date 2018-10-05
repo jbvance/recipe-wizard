@@ -18,8 +18,7 @@ $(document).ready(function () {
     });
 })
 
-function getHealthLabels(recipe) {
-   // return `<ul><li>ingred 1</li><li>ingred 1</li></ul>`
+function getHealthLabels(recipe) {    
     let html = ''
     if (!recipe.healthLabels) return ''
     html += '<ul>';
@@ -29,6 +28,10 @@ function getHealthLabels(recipe) {
     html += '</ul>';
     return html;
 }
+
+function numberWithCommas(num){
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
 
 
 function getRecipeHtml(recipe) {
@@ -41,8 +44,8 @@ function getRecipeHtml(recipe) {
                     <span class="recipe-text__time"> ${recipe.totalTime} minutes</span>
                 </div>  
                 <div class="recipe-box__details js-recipe-details">
-                    <div class="recipe-box__ingredients">${recipe.ingredients.length} ingredients</div>
-                   <div class="recipe-box__health-labels"${getHealthLabels(recipe)}</div>
+                    <div class="recipe-box__ingredients">${recipe.ingredients.length} ingredients &#124; ${numberWithCommas(parseInt(recipe.calories))} calories</div>
+                    <div class="recipe-box__health-labels">${getHealthLabels(recipe)}</div>
                 </div>                                     
             </div>           
         </div>

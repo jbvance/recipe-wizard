@@ -64,8 +64,7 @@
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
-    width: 100%;    
-    text-align: center;
+    width: 100%;        
    
   }
 
@@ -78,10 +77,15 @@
     width: 100%;
     height: auto;
   }
-  
+
+  .recipe-box__health-labels ul {
+    list-style: none;
+    padding-left: 0;
+    text-align: center;          
+  } 
 
   .recipe-box__ingredients {
-      
+      text-align: center;     
   }
 
   .recipe-box:hover {
