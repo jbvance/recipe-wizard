@@ -1,0 +1,44 @@
+card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s; }
+
+.icon-answer {
+  font-size: 1.4em;
+  margin-right: 10px; }
+
+  main {
+    padding-top: 40px;
+  }
+  
+  main .row {
+    margin-bottom: 20px;
+  }
+  
+  header {
+    background-color: orange;
+    padding: 10px 0;
+  }
+  
+  header h2 {
+    margin-bottom: 8px;
+  }
+
+  .recipe-box {
+    border: 1px solid rgb(209, 209, 209);
+    margin-bottom: 20px;
+  }
+  
+  .recipe-box img {
+    width: 100%;
+    height: auto;
+
+  }
+  
+  .recipe-text {
+    padding: .5rem;;
+  }
+  
+  .recipe-text span {
+    display: block;
+    margin-bottom: .5rem;;
+  }
