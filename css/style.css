@@ -78,11 +78,32 @@
     height: auto;
   }
 
-  .recipe-box__health-labels ul {
-    list-style: none;
-    padding-left: 0;
-    text-align: center;          
+  .recipe-box__health-labels {       
+    display: flex;
+    justify-content: center;
   } 
+
+  .recipe-box__health-labels ul {    
+    list-style: none;
+    margin-top: 10px;
+    padding: 0;    
+  } 
+
+  .recipe-box__health-labels ul li {
+    padding-left: 1.3em;
+  }
+
+  .recipe-box__health-labels ul li:not(:last-child) {
+    margin-bottom: 3px;
+  }
+
+  .recipe-box__health-labels ul li:before {
+    content: "\f00c"; /* FontAwesome Unicode */
+    font-family: FontAwesome;
+    display: inline-block;
+    margin-left: -1.3em; /* same as padding-left set on li */
+    width: 1.3em; /* same as padding-left set on li */
+  }
 
   .recipe-box__ingredients {
       text-align: center;     

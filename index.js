@@ -23,7 +23,7 @@ function getHealthLabels(recipe) {
     if (!recipe.healthLabels) return ''
     html += '<ul>';
     for (let i = 0; i < recipe.healthLabels.length; i++) {
-        html += `<li>${recipe.healthLabels[i]}`;
+        html += `<li>${recipe.healthLabels[i]}</li>`;
     }
     html += '</ul>';
     return html;
@@ -31,7 +31,7 @@ function getHealthLabels(recipe) {
 
 function numberWithCommas(num){
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
+}
 
 
 function getRecipeHtml(recipe) {
@@ -45,7 +45,7 @@ function getRecipeHtml(recipe) {
                 </div>  
                 <div class="recipe-box__details js-recipe-details">
                     <div class="recipe-box__ingredients">${recipe.ingredients.length} ingredients &#124; ${numberWithCommas(parseInt(recipe.calories))} calories</div>
-                    <div class="recipe-box__health-labels">${getHealthLabels(recipe)}</div>
+                    <div class="recipe-box__health-labels">${getHealthLabels(recipe)}</div>                   
                 </div>                                     
             </div>           
         </div>
