@@ -2,34 +2,32 @@ let props = {
     loading: false
 }
 
-$(document).ready(function () {    
+$(document).ready(function () {
     displayRecipes(response);
     // getRecipes()
     //     .then(recipes => {
     //         displayRecipes(recipes)
     //         hideLoading();
     //     });
-    $(".recipe-box").hover(function(){
+    $(".recipe-box").hover(function () {
         $(this).find(".card__picture").css("opacity", .1);
         $(this).find(".recipe-box__details").show();
-        }, function(){
+    }, function () {
         $(this).find(".card__picture").css("opacity", 1);
         $(this).find(".recipe-box__details").hide();
     });
 })
 
-function getHealthLabels(recipe) {    
-    let html = ''
-    if (!recipe.healthLabels) return ''
-    html += '<ul>';
-    for (let i = 0; i < recipe.healthLabels.length; i++) {
-        html += `<li>${recipe.healthLabels[i]}</li>`;
-    }
-    html += '</ul>';
-    return html;
+function getHealthLabels(recipe) {
+    if (!recipe.healthLabels) return '';
+    const liString = recipe.healthLabels.map(item => {
+        return `<li>${item}</li>`
+    }).join('\n\t');
+    return `<ul>${liString}</ul>`;
+
 }
 
-function numberWithCommas(num){
+function numberWithCommas(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -45,7 +43,8 @@ function getRecipeHtml(recipe) {
                 </div>  
                 <div class="recipe-box__details js-recipe-details">
                     <div class="recipe-box__ingredients">${recipe.ingredients.length} ingredients &#124; ${numberWithCommas(parseInt(recipe.calories))} calories</div>
-                    <div class="recipe-box__health-labels">${getHealthLabels(recipe)}</div>                   
+                    <div class="recipe-box__health-labels">${getHealthLabels(recipe)}</div>
+                    <div class="recipe-box__link"><a href="${recipe.url}" target="_blank" class="btn btn--green">View Recipe</a></div>                 
                 </div>                                     
             </div>           
         </div>
@@ -56,18 +55,34 @@ function getRecipeHtml(recipe) {
 function displayRecipes(recipes) {
     let html = ''
     const tmpArray = recipes.hits.slice(0, 20);
-    for (let i = 0; i < tmpArray.length; i++) {
-        const recipeHtml = getRecipeHtml(tmpArray[i].recipe);
-        if ((i + 1) % 3 === 1) {
-            html += `<div class="row">${recipeHtml}`; // open the row div
-        } else if ((i + 1) % 3 === 0 || i === (tmpArray.length - 1)) {
-            html += `${recipeHtml}</div>`; // end the row div
+    html = tmpArray.map((item, index) => {
+        const recipeHtml = getRecipeHtml(item.recipe);
+        if ((index + 1) % 3 === 1) {
+            return `<div class="row">${recipeHtml}`; // open the row div
+        } else if ((index + 1) % 3 === 0 || index === (tmpArray.length - 1)) {
+            return `${recipeHtml}</div>`; // end the row div
         } else {
-            html += recipeHtml;
+            return recipeHtml;
         }
-    }
+    }).join('');
     $('.js-recipes').replaceWith(html);
 }
+
+// function displayRecipes(recipes) {
+//     let html = ''
+//     const tmpArray = recipes.hits.slice(0, 20);
+//     for (let i = 0; i < tmpArray.length; i++) {
+//         const recipeHtml = getRecipeHtml(tmpArray[i].recipe);
+//         if ((i + 1) % 3 === 1) {
+//             html += `<div class="row">${recipeHtml}`; // open the row div
+//         } else if ((i + 1) % 3 === 0 || i === (tmpArray.length - 1)) {
+//             html += `${recipeHtml}</div>`; // end the row div
+//         } else {
+//             html += recipeHtml;
+//         }
+//     }
+//     $('.js-recipes').replaceWith(html);
+// }
 
 function showLoading() {
     $('.js-loading').show();
@@ -81,7 +96,7 @@ function hideLoading() {
 
 function getRecipes() {
     // set as loading
-   showLoading();
+    showLoading();
     return new Promise((resolve, reject) => {
         const url = `https://api.edamam.com/search?q=grilled cheese&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-30`
         getJson(url)
