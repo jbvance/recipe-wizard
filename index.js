@@ -9,6 +9,19 @@ $(document).ready(function () {
     //         displayRecipes(recipes)
     //         hideLoading();
     //     });
+   
+    $(".js-btn-cancel").click(function() {
+        $("#divModal").hide();
+    })
+
+    $(".close").click(function() {
+        $("#divModal").hide();
+    })
+
+    $(".js-btn-search").click(function(e) {
+        $("#divModal").show();
+    });
+
     $(".recipe-box").hover(function () {
         $(this).find(".card__picture").css("opacity", .1);
         $(this).find(".recipe-box__details").show();
