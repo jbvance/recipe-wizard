@@ -22,24 +22,29 @@
 
     <header class="header-main" role="banner">
         <div class="row">
-            <div class="col-12">
+            <div class="col-6 header-left">
                 <h2>Recipe Wizard</h2>
                 <span>Make dinner easy tonight!</span>
+            </div>
+            <div class="col-6">
+                <div class="logo">
+                    <span><i class="fas fa-utensils"></i></span>
+                </div>
             </div>
         </div>
     </header>
 
     <div class="container">
-        <div class="js-loading"><span><i class="fa fa-spinner fa-spin" style="font-size:24px"></i>Loading...</span></div>
-        <div><button class="btn btn--green js-btn-search">Search</button>
-        <main role="main" class="js-recipes">
+        <section class="js-loading"><span><i class="fa fa-spinner fa-spin" style="font-size:24px"></i>Loading...</span></section>
+        <div>
+            <button class="btn btn--green js-btn-search">Start a New Search</button>
+            <main role="main" class="js-recipes">
+            </main>
 
-        </main>
-       
         </div>
 
         <!-- modal search form -->
-        <div id="divModal" class="modal">
+        <!-- <div id="divModal" class="modal">
             <form class="modal-content animate">
                 <div class="imgcontainer">
                     
@@ -57,7 +62,17 @@
                     <button class="btn btn--green js-btn-cancel">Cancel</button>                   
                 </div>
             </form>
-        </div>
+        </div> -->
+
+        <form class="js-search-form container">
+            <label for="search-text"><b>Enter a recipe name or ingredient to search for</b></label>
+            <input type="text" placeholder="Enter a recipe name or ingredient to search for" class="js-search-text"
+                name="search-text" id="search-text" required>
+
+            <button type="submit" class="btn btn--green js-btn-search-submit">Search</button>           
+            <button class="btn btn--green btn-cancel-search js-btn-cancel-search">Cancel</button>           
+        </form>
+    </div>
 
     </div>
 

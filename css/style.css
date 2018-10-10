@@ -17,7 +17,7 @@
   cursor: pointer; 
 }
 
-  .btn:hover {
+  /* .btn:hover {
     transform: translateY(-0.3rem);
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); 
   }
@@ -30,12 +30,16 @@
   .btn:active, .btn:focus {
     outline: none;
     transform: translateY(-0.1rem);
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); }
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2); } */
 
   .btn--green {
     background-color:rgb(22,141,30);
     color:  #fff;
    
+  }
+
+  .btn-search-cancel {
+    margin-left: 1.5rem;
   }
 
 
@@ -49,17 +53,28 @@
   clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); 
   transition: all .3s;
 }
-  .header-main {
-    margin-bottom: 3rem;
-  }
 
-  .js-loading {
-    display: none;
-  }
+.header-main {
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.js-loading {
+  display: none;
+}
 
 .icon-answer {
   font-size: 1.4em;
-  margin-right: 10px; }
+  margin-right: 10px; }  
+
+.logo {
+  text-align: right;
+  font-size: 2.5rem;   
+  position: absolute;
+  right: 2rem;;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
   main {
     padding-top: 40px;
@@ -172,6 +187,10 @@
     font-size: .8rem;
     position: absolute;
     bottom: 0;
+  }
+
+  .js-search-form {
+    display: none;
   }
 
 /* Full-width text input fields */

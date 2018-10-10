@@ -1,28 +1,33 @@
-let props = {
-    loading: false
-}
-
 $(document).ready(function () {
-    displayRecipes(response);
+    //displayRecipes(response);
     // getRecipes()
     //     .then(recipes => {
     //         displayRecipes(recipes)
     //         hideLoading();
-    //     });
-   
-    $(".js-btn-cancel").click(function() {
+    //     });    
+
+    $('.close').click(function () {
         $("#divModal").hide();
     })
 
-    $(".close").click(function() {
-        $("#divModal").hide();
-    })
-
-    $(".js-btn-search").click(function(e) {
-        $("#divModal").show();
+    $('.js-btn-search').click(function (e) {        
+        showSearchForm();        
+        $('.js-search-text').val('');   
+        $('.js-search-text').focus();   
     });
 
+    $(".js-btn-cancel-search").click(function (e) {
+        e.preventDefault();
+        hideSearchForm();
+    })
+
+    $(".js-search-form").submit(function (e) {
+        e.preventDefault();
+        searchRecipes($('.js-search-text').val());
+    })
+
     $(".recipe-box").hover(function () {
+        console.log('hovered')
         $(this).find(".card__picture").css("opacity", .1);
         $(this).find(".recipe-box__details").show();
     }, function () {
@@ -30,6 +35,42 @@ $(document).ready(function () {
         $(this).find(".recipe-box__details").hide();
     });
 })
+
+function showSearchForm() {
+    hideLoading();
+    hideRecipes();
+    hideSearchButton();
+    $('.js-search-form').fadeIn(400, "linear");
+}
+
+function hideSearchForm() {
+    $('.js-search-form').hide();
+    hideLoading();    
+    showRecipes();
+    showSearchButton();
+}
+
+function hideSearchButton() {
+    $('.js-btn-search').hide();
+}
+
+function showSearchButton() {
+    $('.js-btn-search').fadeIn(400, "linear");
+}
+
+function searchRecipes(searchTerm) {
+    hideRecipes();
+    showLoading();
+    $('.js-search-form').hide();
+    getRecipes(searchTerm)
+        .then(recipes => {
+            displayRecipes(recipes);
+            hideLoading();
+            showRecipes();
+            showSearchButton();
+        });
+    
+}
 
 function getHealthLabels(recipe) {
     if (!recipe.healthLabels) return '';
@@ -43,7 +84,6 @@ function getHealthLabels(recipe) {
 function numberWithCommas(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
 
 function getRecipeHtml(recipe) {
     const html = `
@@ -78,7 +118,7 @@ function displayRecipes(recipes) {
             return recipeHtml;
         }
     }).join('');
-    $('.js-recipes').replaceWith(html);
+    $('.js-recipes').html(html);
 }
 
 // function displayRecipes(recipes) {
@@ -99,19 +139,40 @@ function displayRecipes(recipes) {
 
 function showLoading() {
     $('.js-loading').show();
-    $('.js-recipes').hide();
+    //$('.js-recipes').hide();
 }
 
 function hideLoading() {
     $('.js-loading').hide();
-    $('.js-recipes').show();
+    //$('.js-recipes').show();
 }
 
-function getRecipes() {
+function hideRecipes() {
+    $('.js-recipes').hide();
+}
+
+function showRecipes() {
+    $('.js-recipes').show(100, "linear", function() {
+       registerRecipeHover();
+    });   
+}
+
+function registerRecipeHover() {
+    $(".recipe-box").hover(function () {
+        console.log('hovered')
+        $(this).find(".card__picture").css("opacity", .1);
+        $(this).find(".recipe-box__details").show();
+    }, function () {
+        $(this).find(".card__picture").css("opacity", 1);
+        $(this).find(".recipe-box__details").hide();
+    });
+}
+
+function getRecipes(searchTerm = "spaghetti") {
     // set as loading
     showLoading();
     return new Promise((resolve, reject) => {
-        const url = `https://api.edamam.com/search?q=grilled cheese&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-30`
+        const url = `https://api.edamam.com/search?q=${searchTerm}&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-30`
         getJson(url)
             .then(res => {
                 resolve(res)
