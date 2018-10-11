@@ -192,7 +192,8 @@ function getRecipes(queryParams) {
 function getJson(url) {
     return new Promise((resolve, reject) => {
         $.ajax({
-            url: encodeURI(url),
+           // url: encodeURI(url),
+           url,
 
             // The name of the callback parameter, as specified by the Api docs
             jsonp: "callback",
