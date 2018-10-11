@@ -58,11 +58,16 @@ function showSearchButton() {
     $('.js-btn-search').fadeIn(400, "linear");
 }
 
-function searchRecipes(searchTerm) {
+function buildQueryParams() {
+    return $('.js-search-form').serialize();
+}
+
+function searchRecipes() {
+    const queryParams = buildQueryParams();    
     hideRecipes();
     showLoading();
     $('.js-search-form').hide();
-    getRecipes(searchTerm)
+    getRecipes(queryParams)
         .then(recipes => {
             displayRecipes(recipes);
             hideLoading();
@@ -168,11 +173,11 @@ function registerRecipeHover() {
     });
 }
 
-function getRecipes(searchTerm = "spaghetti") {
+function getRecipes(queryParams) {
     // set as loading
     showLoading();
     return new Promise((resolve, reject) => {
-        const url = `https://api.edamam.com/search?q=${searchTerm}&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-30`
+        const url = `https://api.edamam.com/search?${queryParams}&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-30`
         getJson(url)
             .then(res => {
                 resolve(res)

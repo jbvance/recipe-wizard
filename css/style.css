@@ -193,6 +193,10 @@
     display: none;
   }
 
+  .search-criteria {
+    margin: 1.5rem 0;
+  }
+
 /* Full-width text input fields */
 input[type=text] {
   width: 100%;

@@ -67,7 +67,13 @@
         <form class="js-search-form container">
             <label for="search-text"><b>Enter a recipe name or ingredient to search for</b></label>
             <input type="text" placeholder="Enter a recipe name or ingredient to search for" class="js-search-text"
-                name="search-text" id="search-text" required>
+                name="q" id="q" required>
+            <fieldset class="search-criteria js-search-criteria">
+                <legend>Narrow results (optional) </legend>
+                <input type="checkbox" name="diet"  value="high-protein"> High-Protein<br>
+                <input type="checkbox" name="diet"  value="low-carb"> Low-Carb<br>
+                <input type="checkbox" name="diet"  value="low-fat"> Low-Fat<br>               
+            </fieldset>
 
             <button type="submit" class="btn btn--green js-btn-search-submit">Search</button>           
             <button class="btn btn--green btn-cancel-search js-btn-cancel-search">Cancel</button>           
