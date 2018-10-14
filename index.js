@@ -138,9 +138,14 @@ function hideError() {
 function showError(error) {
     const jsErr = $('.js-error')  
     hideLoading();
+    emptyRecipes();
     showSearchButton();
     jsErr.html(error)
     jsErr.show();
+}
+
+function emptyRecipes() {
+    $('.js-recipes').empty();
 }
 
 // function displayRecipes(recipes) {
