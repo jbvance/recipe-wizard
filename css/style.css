@@ -42,6 +42,19 @@
     margin-left: 1.5rem;
   }
 
+  .error {
+    display: none;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    color: #721c24;
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;   
+}
+
+
 
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

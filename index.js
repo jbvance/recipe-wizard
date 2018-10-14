@@ -10,10 +10,11 @@ $(document).ready(function () {
         $("#divModal").hide();
     })
 
-    $('.js-btn-search').click(function (e) {        
-        showSearchForm();        
-        $('.js-search-text').val('');   
-        $('.js-search-text').focus();   
+    $('.js-btn-search').click(function (e) {
+        hideError();
+        showSearchForm();
+        $('.js-search-text').val('');
+        $('.js-search-text').focus();
     });
 
     $(".js-btn-cancel-search").click(function (e) {
@@ -45,7 +46,7 @@ function showSearchForm() {
 
 function hideSearchForm() {
     $('.js-search-form').hide();
-    hideLoading();    
+    hideLoading();
     showRecipes();
     showSearchButton();
 }
@@ -63,18 +64,22 @@ function buildQueryParams() {
 }
 
 function searchRecipes() {
-    const queryParams = buildQueryParams();    
+    const queryParams = buildQueryParams();
     hideRecipes();
     showLoading();
     $('.js-search-form').hide();
     getRecipes(queryParams)
         .then(recipes => {
+            if (!recipes.hits || recipes.hits.length < 1) {
+                return showError('No recipes returned');
+            }
             displayRecipes(recipes);
+            hideError();
             hideLoading();
             showRecipes();
             showSearchButton();
         });
-    
+
 }
 
 function getHealthLabels(recipe) {
@@ -126,6 +131,18 @@ function displayRecipes(recipes) {
     $('.js-recipes').html(html);
 }
 
+function hideError() {
+    $('.js-error').hide();
+}
+
+function showError(error) {
+    const jsErr = $('.js-error')  
+    hideLoading();
+    showSearchButton();
+    jsErr.html(error)
+    jsErr.show();
+}
+
 // function displayRecipes(recipes) {
 //     let html = ''
 //     const tmpArray = recipes.hits.slice(0, 20);
@@ -157,9 +174,9 @@ function hideRecipes() {
 }
 
 function showRecipes() {
-    $('.js-recipes').show(100, "linear", function() {
-       registerRecipeHover();
-    });   
+    $('.js-recipes').show(100, "linear", function () {
+        registerRecipeHover();
+    });
 }
 
 function registerRecipeHover() {
@@ -192,8 +209,8 @@ function getRecipes(queryParams) {
 function getJson(url) {
     return new Promise((resolve, reject) => {
         $.ajax({
-           // url: encodeURI(url),
-           url,
+            // url: encodeURI(url),
+            url,
 
             // The name of the callback parameter, as specified by the Api docs
             jsonp: "callback",
