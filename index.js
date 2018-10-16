@@ -1,3 +1,7 @@
+let state = {
+    recipes: []
+}
+
 $(document).ready(function () {
     //displayRecipes(response);
     // getRecipes()
@@ -27,8 +31,7 @@ $(document).ready(function () {
         searchRecipes($('.js-search-text').val());
     })
 
-    $(".recipe-box").hover(function () {
-        console.log('hovered')
+    $(".recipe-box").hover(function () {       
         $(this).find(".card__picture").css("opacity", .1);
         $(this).find(".recipe-box__details").show();
     }, function () {
@@ -73,7 +76,8 @@ function searchRecipes() {
             if (!recipes.hits || recipes.hits.length < 1) {
                 return showError('No recipes returned');
             }
-            displayRecipes(recipes);
+            state.recipes = recipes.hits;
+            displayRecipes(recipes.hits);
             hideError();
             hideLoading();
             showRecipes();
@@ -115,10 +119,25 @@ function getRecipeHtml(recipe) {
     return html;
 }
 
+function sortRecipes(sortBy) {
+    console.log('SORTING')    
+    if (!sortBy) return; 
+    showLoading();
+    let recipes = state.recipes.slice(0);    
+    recipes.sort((a, b) => {
+        return a.recipe[sortBy] - b.recipe[sortBy]
+    })   
+    
+    displayRecipes(recipes);
+    hideLoading();
+}
+
 function displayRecipes(recipes) {
-    let html = ''
-    const tmpArray = recipes.hits.slice(0, 20);
-    html = tmpArray.map((item, index) => {
+    // First, empty the html
+    emptyRecipes();
+    let html = '';    
+    const tmpArray = recipes.slice(0, 20);
+    html += tmpArray.map((item, index) => {
         const recipeHtml = getRecipeHtml(item.recipe);
         if ((index + 1) % 3 === 1) {
             return `<div class="row">${recipeHtml}`; // open the row div
@@ -129,6 +148,11 @@ function displayRecipes(recipes) {
         }
     }).join('');
     $('.js-recipes').html(html);
+    $(".js-sort-by").change(function (e) {
+        sortRecipes(e.target.value);
+    });
+    registerRecipeHover();
+    showRecipes();
 }
 
 function hideError() {
@@ -136,7 +160,7 @@ function hideError() {
 }
 
 function showError(error) {
-    const jsErr = $('.js-error')  
+    const jsErr = $('.js-error')
     hideLoading();
     emptyRecipes();
     showSearchButton();
@@ -148,25 +172,11 @@ function emptyRecipes() {
     $('.js-recipes').empty();
 }
 
-// function displayRecipes(recipes) {
-//     let html = ''
-//     const tmpArray = recipes.hits.slice(0, 20);
-//     for (let i = 0; i < tmpArray.length; i++) {
-//         const recipeHtml = getRecipeHtml(tmpArray[i].recipe);
-//         if ((i + 1) % 3 === 1) {
-//             html += `<div class="row">${recipeHtml}`; // open the row div
-//         } else if ((i + 1) % 3 === 0 || i === (tmpArray.length - 1)) {
-//             html += `${recipeHtml}</div>`; // end the row div
-//         } else {
-//             html += recipeHtml;
-//         }
-//     }
-//     $('.js-recipes').replaceWith(html);
-// }
-
 function showLoading() {
     $('.js-loading').show();
-    //$('.js-recipes').hide();
+    $('.js-recipes').hide();
+    $('.js-btn-search').hide();
+    $('.js-sort-by').hide();
 }
 
 function hideLoading() {
@@ -176,17 +186,18 @@ function hideLoading() {
 
 function hideRecipes() {
     $('.js-recipes').hide();
+    $('.js-sort-by').hide();
 }
 
 function showRecipes() {
-    $('.js-recipes').show(100, "linear", function () {
+    $('.js-recipes').show(500, "linear", function () {
         registerRecipeHover();
+        $('.js-sort-by').show();
     });
 }
 
 function registerRecipeHover() {
-    $(".recipe-box").hover(function () {
-        console.log('hovered')
+    $(".recipe-box").hover(function () {        
         $(this).find(".card__picture").css("opacity", .1);
         $(this).find(".recipe-box__details").show();
     }, function () {
@@ -207,6 +218,8 @@ function getRecipes(queryParams) {
             .catch(err => {
                 console.log("ERROR", err);
                 hideLoading();
+                showError('There was an error completing your request. Please try your search again' )
+                showSearchButton();
             })
     })
 }
@@ -237,7 +250,6 @@ function getJson(url) {
             }
         });
     })
-
 }
 
 

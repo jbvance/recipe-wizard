@@ -39,12 +39,19 @@
         <section class="row">
             <div class="col-12 error js-error"></div>
         </section>
-        <div>
+        <main role="main">
             <button class="btn btn--green js-btn-search">Start a New Search</button>
-            <main role="main" class="js-recipes">
-            </main>
-
-        </div>
+            <div class="sort-by js-sort-by">
+                Sort by:
+                <select name="sortBy" id="sortBy">
+                    <option value="">Select an option</option>
+                    <option value="totalTime">Preparation time</option>
+                    <option value="calories">Calories</option>
+                </select>
+            </div>
+            <section class="js-recipes">
+            </section>
+        </main>
 
         <!-- modal search form -->
         <!-- <div id="divModal" class="modal">
