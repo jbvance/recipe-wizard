@@ -21,6 +21,10 @@ $(document).ready(function () {
         $('.js-search-text').focus();
     });
 
+    $(".js-sort-by").change(function (e) {
+        sortRecipes(e.target.value);
+    });
+
     $(".js-btn-cancel-search").click(function (e) {
         e.preventDefault();
         hideSearchForm();
@@ -119,16 +123,16 @@ function getRecipeHtml(recipe) {
     return html;
 }
 
-function sortRecipes(sortBy) {
-    console.log('SORTING')    
+function sortRecipes(sortBy) {   
     if (!sortBy) return; 
+    hideRecipes();
     showLoading();
     let recipes = state.recipes.slice(0);    
     recipes.sort((a, b) => {
         return a.recipe[sortBy] - b.recipe[sortBy]
     })   
     
-    displayRecipes(recipes);
+    displayRecipes(recipes);    
     hideLoading();
 }
 
@@ -147,11 +151,7 @@ function displayRecipes(recipes) {
             return recipeHtml;
         }
     }).join('');
-    $('.js-recipes').html(html);
-    $(".js-sort-by").change(function (e) {
-        sortRecipes(e.target.value);
-    });
-    registerRecipeHover();
+    $('.js-recipes').html(html);    
     showRecipes();
 }
 
@@ -190,7 +190,7 @@ function hideRecipes() {
 }
 
 function showRecipes() {
-    $('.js-recipes').show(500, "linear", function () {
+    $('.js-recipes').show(300, "linear", function () {
         registerRecipeHover();
         $('.js-sort-by').show();
     });
