@@ -35,7 +35,7 @@ $(document).ready(function () {
         searchRecipes($('.js-search-text').val());
     })
 
-    $(".recipe-box").hover(function () {       
+    $(".recipe-box").hover(function () {
         $(this).find(".card__picture").css("opacity", .1);
         $(this).find(".recipe-box__details").show();
     }, function () {
@@ -123,23 +123,25 @@ function getRecipeHtml(recipe) {
     return html;
 }
 
-function sortRecipes(sortBy) {   
-    if (!sortBy) return; 
-    hideRecipes();
-    showLoading();
-    let recipes = state.recipes.slice(0);    
+function sortRecipes(sortBy) {
+    if (!sortBy) return;
+    hideRecipes();   
+    let recipes = state.recipes.slice(0);
+
     recipes.sort((a, b) => {
-        return a.recipe[sortBy] - b.recipe[sortBy]
-    })   
-    
+        if (sortBy === "ingredients") {
+            return a.recipe.ingredients.length - b.recipe.ingredients.length;
+        } else {
+            return a.recipe[sortBy] - b.recipe[sortBy]
+        }
+    })
     displayRecipes(recipes);    
-    hideLoading();
 }
 
 function displayRecipes(recipes) {
     // First, empty the html
     emptyRecipes();
-    let html = '';    
+    let html = '';
     const tmpArray = recipes.slice(0, 20);
     html += tmpArray.map((item, index) => {
         const recipeHtml = getRecipeHtml(item.recipe);
@@ -151,7 +153,7 @@ function displayRecipes(recipes) {
             return recipeHtml;
         }
     }).join('');
-    $('.js-recipes').html(html);    
+    $('.js-recipes').html(html);
     showRecipes();
 }
 
@@ -197,7 +199,7 @@ function showRecipes() {
 }
 
 function registerRecipeHover() {
-    $(".recipe-box").hover(function () {        
+    $(".recipe-box").hover(function () {
         $(this).find(".card__picture").css("opacity", .1);
         $(this).find(".recipe-box__details").show();
     }, function () {
@@ -218,7 +220,7 @@ function getRecipes(queryParams) {
             .catch(err => {
                 console.log("ERROR", err);
                 hideLoading();
-                showError('There was an error completing your request. Please try your search again' )
+                showError('There was an error completing your request. Please try your search again')
                 showSearchButton();
             })
     })
