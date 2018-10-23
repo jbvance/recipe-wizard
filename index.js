@@ -25,11 +25,6 @@ $(document).ready(function () {
         sortRecipes(e.target.value);
     });
 
-    $(".js-btn-cancel-search").click(function (e) {
-        e.preventDefault();
-        hideSearchForm();
-    })
-
     $(".js-search-form").submit(function (e) {
         e.preventDefault();
         searchRecipes($('.js-search-text').val());
@@ -212,7 +207,7 @@ function getRecipes(queryParams) {
     // set as loading
     showLoading();
     return new Promise((resolve, reject) => {
-        const url = `https://api.edamam.com/search?${queryParams}&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-30`
+        const url = `https://api.edamam.com/search?${queryParams}&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-120`
         getJson(url)
             .then(res => {
                 resolve(res)
