@@ -14,8 +14,13 @@ $(document).ready(function () {
         $("#divModal").hide();
     })
 
-    $('.js-btn-search').click(function (e) {
-        hideError();
+    $('.js-btn-start').click(function() {
+        $('.js-get-started').hide();
+        $('body').css('background', 'white');
+        showSearchForm();
+    })
+
+    $('.js-btn-search').click(function (e) {     
         showSearchForm();
         $('.js-search-text').val('');
         $('.js-search-text').focus();
@@ -40,6 +45,7 @@ $(document).ready(function () {
 })
 
 function showSearchForm() {
+    hideError();
     hideLoading();
     hideRecipes();
     hideSearchButton();
@@ -54,11 +60,11 @@ function hideSearchForm() {
 }
 
 function hideSearchButton() {
-    $('.js-btn-search').hide();
+    $('.js-search-btn-row').hide();
 }
 
 function showSearchButton() {
-    $('.js-btn-search').fadeIn(400, "linear");
+    $('.js-search-btn-row').fadeIn(400, "linear");
 }
 
 function buildQueryParams() {
@@ -172,7 +178,7 @@ function emptyRecipes() {
 function showLoading() {
     $('.js-loading').show();
     $('.js-recipes').hide();
-    $('.js-btn-search').hide();
+    $('.js-search-btn-row').hide();
     $('.js-sort-by').hide();
 }
 

@@ -4,6 +4,14 @@
   }
 }
 
+body { 
+  background: url(../img/brown-table.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .btn, .btn:link, .btn:visited {
   color: white;
   text-decoration: none;
@@ -38,8 +46,9 @@
    
   }
 
-  .btn-search-cancel {
-    margin-left: 1.5rem;
+  .fa-spin {
+    font-size:24px;
+    margin-right: 10px;
   }
 
   .error {
@@ -57,6 +66,7 @@
 .sort-by {
   display: none;
   margin: 1rem;
+  text-align: center;
 }
 
 .card {
@@ -79,9 +89,9 @@
   display: none;
 }
 
-.icon-answer {
+/* .icon-answer {
   font-size: 1.4em;
-  margin-right: 10px; }  
+  margin-right: 10px; }   */
 
 .logo {
   text-align: right;
@@ -90,6 +100,15 @@
   right: 2rem;;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.get-started {
+  color: #fff;
+  font-weight: 700;
+  background:rgba(110, 107, 107, 0.6);
+  min-height: 15rem;
+  padding: 2rem;
+  text-align: center;
 }
 
   /* main {
@@ -211,6 +230,14 @@
 
   .search-criteria {
     margin: 1.5rem 0;
+  }
+
+  .search-btn-row {
+    text-align: center;
+  }
+
+  .js-search-btn-row {
+    display: none;
   }
 
 /* Full-width text input fields */
