@@ -2,47 +2,44 @@ let state = {
     recipes: []
 }
 
-$(document).ready(function () {
-    //displayRecipes(response);
-    // getRecipes()
-    //     .then(recipes => {
-    //         displayRecipes(recipes)
-    //         hideLoading();
-    //     });    
+$(initApp)
 
-    $('.close').click(function () {
-        $("#divModal").hide();
-    })
 
-    $('.js-btn-start').click(function() {
+function initApp() {   
+    handleStartClick();
+    handleSearchClick();
+    handleSortChange();
+    handleSearchSubmit();   
+}
+
+function handleStartClick() {
+    $('.js-btn-start').click(function () {
         $('.js-get-started').hide();
         $('body').css('background', 'white');
         showSearchForm();
     })
+}
 
-    $('.js-btn-search').click(function (e) {     
+function handleSearchClick() {
+    $('.js-btn-search').click(function (e) {
         showSearchForm();
         $('.js-search-text').val('');
         $('.js-search-text').focus();
     });
+}
 
+function handleSortChange() {
     $(".js-sort-by").change(function (e) {
         sortRecipes(e.target.value);
     });
+}
 
+function handleSearchSubmit() {
     $(".js-search-form").submit(function (e) {
         e.preventDefault();
         searchRecipes($('.js-search-text').val());
     })
-
-    $(".recipe-box").hover(function () {
-        $(this).find(".card__picture").css("opacity", .1);
-        $(this).find(".recipe-box__details").show();
-    }, function () {
-        $(this).find(".card__picture").css("opacity", 1);
-        $(this).find(".recipe-box__details").hide();
-    });
-})
+}
 
 function showSearchForm() {
     hideError();
@@ -100,10 +97,6 @@ function getHealthLabels(recipe) {
 
 }
 
-function numberWithCommas(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
 function getRecipeHtml(recipe) {
     const html = `
         <div class="col-4">
@@ -126,7 +119,7 @@ function getRecipeHtml(recipe) {
 
 function sortRecipes(sortBy) {
     if (!sortBy) return;
-    hideRecipes();   
+    hideRecipes();
     let recipes = state.recipes.slice(0);
 
     recipes.sort((a, b) => {
@@ -136,14 +129,14 @@ function sortRecipes(sortBy) {
             return a.recipe[sortBy] - b.recipe[sortBy]
         }
     })
-    displayRecipes(recipes);    
+    displayRecipes(recipes);
 }
 
 function displayRecipes(recipes) {
     // First, empty the html
     emptyRecipes();
     let html = '';
-    const tmpArray = recipes.slice(0, 20);
+    const tmpArray = recipes.slice(0, 60); // limit to 60 recipes
     html += tmpArray.map((item, index) => {
         const recipeHtml = getRecipeHtml(item.recipe);
         if ((index + 1) % 3 === 1) {
@@ -213,7 +206,7 @@ function getRecipes(queryParams) {
     // set as loading
     showLoading();
     return new Promise((resolve, reject) => {
-        const url = `https://api.edamam.com/search?${queryParams}&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=50&time=1-120`
+        const url = `https://api.edamam.com/search?${queryParams}&app_id=cb67d7d3&app_key=0fcf8a75711dcde2d2e9af5d36837b9e&from=0&to=60&time=1-120`
         getJson(url)
             .then(res => {
                 resolve(res)
@@ -229,10 +222,8 @@ function getRecipes(queryParams) {
 
 function getJson(url) {
     return new Promise((resolve, reject) => {
-        $.ajax({
-            // url: encodeURI(url),
+        $.ajax({            
             url,
-
             // The name of the callback parameter, as specified by the Api docs
             jsonp: "callback",
 
@@ -242,9 +233,7 @@ function getJson(url) {
             // Tell the API what we want and that we want JSON
             data: {
                 format: "json"
-            },
-
-            // Work with the response
+            },            
             success: function (response) {
                 resolve(response);
             },
@@ -255,4 +244,7 @@ function getJson(url) {
     })
 }
 
+function numberWithCommas(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
