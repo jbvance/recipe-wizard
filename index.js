@@ -2,14 +2,28 @@ let state = {
     recipes: []
 }
 
-$(initApp)
-
-
 function initApp() {   
     handleStartClick();
     handleSearchClick();
     handleSortChange();
-    handleSearchSubmit();   
+    handleSearchSubmit(); 
+    handleRecipeMouseEnter(); 
+    handleRecipeMouseLeave();
+    
+}
+
+function handleRecipeMouseEnter() {
+    $('.js-recipes').on('mouseenter', '.recipe-box', function(event) {
+        $(this).find(".card__picture").css("opacity", .1);
+        $(this).find(".recipe-box__details").show();
+    });
+}
+
+function handleRecipeMouseLeave() {
+    $('.js-recipes').on('mouseleave', '.recipe-box', function(event) {
+        $(this).find(".card__picture").css("opacity", 1);
+        $(this).find(".recipe-box__details").hide();
+    });
 }
 
 function handleStartClick() {
@@ -186,19 +200,8 @@ function hideRecipes() {
 }
 
 function showRecipes() {
-    $('.js-recipes').show(300, "linear", function () {
-        registerRecipeHover();
+    $('.js-recipes').show(300, "linear", function () {       
         $('.js-sort-by').show();
-    });
-}
-
-function registerRecipeHover() {
-    $(".recipe-box").hover(function () {
-        $(this).find(".card__picture").css("opacity", .1);
-        $(this).find(".recipe-box__details").show();
-    }, function () {
-        $(this).find(".card__picture").css("opacity", 1);
-        $(this).find(".recipe-box__details").hide();
     });
 }
 
@@ -248,3 +251,4 @@ function numberWithCommas(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+$(initApp)
