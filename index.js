@@ -82,17 +82,22 @@ function buildQueryParams() {
     return $('.js-search-form').serialize();
 }
 
+
+// Perform the search and display the recipes to user
 function searchRecipes() {
     const queryParams = buildQueryParams();
     hideRecipes();
     showLoading();
+    resetSort();
     $('.js-search-form').hide();
+    // Call the API
     getRecipes(queryParams)
         .then(recipes => {
             if (!recipes.hits || recipes.hits.length < 1) {
                 return showError('No recipes returned');
             }
             state.recipes = recipes.hits;
+            // Update the UI to show recipes to user
             displayRecipes(recipes.hits);
             hideError();
             hideLoading();
@@ -102,6 +107,11 @@ function searchRecipes() {
 
 }
 
+function resetSort() {
+    $('#sortBy').val('');
+}
+
+// Get labels from recipes for things such as 'sugar concious', 'peanut-free', etc.
 function getHealthLabels(recipe) {
     if (!recipe.healthLabels) return '';
     const liString = recipe.healthLabels.map(item => {
@@ -111,6 +121,7 @@ function getHealthLabels(recipe) {
 
 }
 
+// Takes a recipe object and returns the HTML for an individual recipe card.
 function getRecipeHtml(recipe) {
     const html = `
         <div class="col-4">
@@ -143,12 +154,11 @@ function sortRecipes(sortBy) {
             return a.recipe[sortBy] - b.recipe[sortBy]
         }
     })
+    // Show the sorted recipes
     displayRecipes(recipes);
 }
 
-function displayRecipes(recipes) {
-    // First, empty the html
-    emptyRecipes();
+function displayRecipes(recipes) {    
     let html = '';
     const tmpArray = recipes.slice(0, 60); // limit to 60 recipes
     html += tmpArray.map((item, index) => {
@@ -190,8 +200,7 @@ function showLoading() {
 }
 
 function hideLoading() {
-    $('.js-loading').hide();
-    //$('.js-recipes').show();
+    $('.js-loading').hide();    
 }
 
 function hideRecipes() {
@@ -251,4 +260,5 @@ function numberWithCommas(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+// Initialize the application
 $(initApp)

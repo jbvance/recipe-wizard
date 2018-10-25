@@ -12,6 +12,10 @@ body {
   background-size: cover;
 }
 
+a { 
+  text-decoration: none;
+}
+
 .btn, .btn:link, .btn:visited {
   color: white;
   text-decoration: none;
