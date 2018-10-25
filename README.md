@@ -30,4 +30,4 @@ Results:
 
 ## Authors
 
-* **Jason Vance** - **
+* **Jason Vance** 
