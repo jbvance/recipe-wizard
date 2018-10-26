@@ -26,6 +26,7 @@ function handleRecipeMouseLeave() {
     });
 }
 
+// When user clicks 'Get Started' button
 function handleStartClick() {
     $('.js-btn-start').click(function () {
         $('.js-get-started').hide();
