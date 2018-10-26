@@ -35,9 +35,9 @@
         </div>
     </header>
     <div class="container">
-        <section class="js-loading"><span><i class="fa fa-spinner fa-spin"></i>Loading...</span></section>
+        <section class="js-loading hidden"><span><i class="fa fa-spinner fa-spin"></i>Loading...</span></section>
         <section class="row">
-            <div class="col-12 error js-error"></div>
+            <div class="col-12 error js-error hidden"></div>
         </section>
         <main role="main">
             <section class="get-started js-get-started">
@@ -46,10 +46,10 @@
                 <p>Sort your results by number of calories, preparation time, or number of ingredients</p>
                 <button class="btn btn--green js-btn-start">Click here to get started!</button>
             </section>
-            <section class="row search-btn-row js-search-btn-row">
+            <section class="row search-btn-row js-search-btn-row hidden">
                 <button class="btn btn--green js-btn-search">Start a New Search</button>
             </section>
-            <div class="sort-by js-sort-by">
+            <div class="sort-by js-sort-by hidden">
                 Sort by:
                 <select name="sortBy" id="sortBy">
                     <option value="">Select an option</option>
@@ -62,7 +62,7 @@
             </section>
         </main>       
 
-        <form class="js-search-form container">
+        <form class="js-search-form container hidden">
             <label for="search-text"><b>Enter a recipe name or ingredient to search for</b></label>
             <input type="text" placeholder="Enter a recipe name or ingredient to search for" class="js-search-text"
                 name="q" id="q" required>

@@ -61,8 +61,12 @@ a:hover, a:visited {
     margin-right: 10px;
   }
 
-  .error {
+  .hidden {
     display: none;
+  }
+
+  .error {
+    
     background-color: #f8d7da;
     border-color: #f5c6cb;
     border: 1px solid transparent;
@@ -74,7 +78,6 @@ a:hover, a:visited {
 }
 
 .sort-by {
-  display: none;
   margin: 1rem;
   text-align: center;
 }
@@ -97,10 +100,6 @@ a:hover, a:visited {
 .header-main {
   margin-bottom: 3rem;
   position: relative;
-}
-
-.js-loading {
-  display: none;
 }
 
 .logo {
@@ -231,20 +230,12 @@ a:hover, a:visited {
     bottom: 0;
   }
 
-  .js-search-form {
-    display: none;
-  }
-
   .search-criteria {
     margin: 1.5rem 0;
   }
 
   .search-btn-row {
     text-align: center;
-  }
-
-  .js-search-btn-row {
-    display: none;
   }
 
 /* Full-width text input fields */

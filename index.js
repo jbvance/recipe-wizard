@@ -95,7 +95,7 @@ function searchRecipes() {
     getRecipes(queryParams)
         .then(recipes => {
             if (!recipes.hits || recipes.hits.length < 1) {
-                return showError('No recipes returned');
+                return showError('Sorry, we couldn\'t find any recipes. Please try a new search');
             }
             state.recipes = recipes.hits;
             // Update the UI to show recipes to user
